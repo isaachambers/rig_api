@@ -1,2 +1,17 @@
 server:
-  port: 8080
+  port: 8383
+  servlet:
+    context-path: /api
+    session:
+      timeout: 5
+
+api.info:
+  title: rig-api
+  description: rig-api, ReadingIsGood stock and order management REST API
+  version: v1
+
+springfox:
+  documentation:
+    swagger:
+      v2:
+        path: /docs/json

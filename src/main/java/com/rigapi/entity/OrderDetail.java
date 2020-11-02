@@ -28,7 +28,6 @@ public class OrderDetail {
   private Product product;
 
   @OneToOne
-  @MapsId
   @JoinColumn(name = "order_id")
   private Order order;
 
