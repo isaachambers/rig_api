@@ -1,0 +1,77 @@
+{
+	"info": {
+		"_postman_id": "41d8f3bb-bcfa-4015-b675-efd9900dc907",
+		"name": "rig-api",
+		"description": "Codecase\nReadingIsGood is an online books retail firm which operates only on internet. Main target of ReadingIsGood is deliver books to their customer within the same day. That is why stock consistency is the first priority for their vision operations.\nIn this case, we will only consider;\n• Registering New Customer\n• Tracking the stock of books\n• Placing a new order\n• List all orders of the customer\n• Viewing the order details\nBase Requirements:\n• Java (min SDK 11), Spring Framework (Spring Boot is more than welcome)\n• Relational (H2) / Non-Relational Database (you can use your favorite)\n• Restful Endpoints\n• Clean Code\n• Brief explanation of your design\nMust Have Requirements:\n• •\n• •\n• • •\nNice to\n• • • •\nNew Customer Endpoint\no Will persist brief information about customers\nNew order\no Will persist new order (statuses may used) o Will update stock records.\nList orders of the customer\no Will query all orders of the customer\nView the order\no Will query the order details\nValidations - Please be sure your system is error proof.\nResponses - Please define success and error response models and use them Authentication - Please secure endpoints (for ex. bearer token)\nHave's:\nLogging - Log all changes on entities. (Which user made specific changes and when) Containerize - Please containerize your endpoints\nPostman - Please prepare Postman request and share with us\nOpen API Specification - Please use Swagger (authentication not needed)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "getToken Copy",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "postman",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "postman-password-secret",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "scope",
+							"value": "webclient",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "demo-user",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "user-password",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{rig-api}}/api/oauth/token",
+					"host": [
+						"{{rig-api}}"
+					],
+					"path": [
+						"api",
+						"oauth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

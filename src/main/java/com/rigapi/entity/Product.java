@@ -25,8 +25,7 @@ public class Product {
   @Column(name = "quantity", nullable = false)
   private int quantity;
 
-  public Product(int id, String name, int quantity) {
-    this.id = id;
+  public Product(String name, int quantity) {
     this.name = name;
     this.quantity = quantity;
   }

@@ -2,8 +2,7 @@ package com.rigapi.service;
 
 import com.rigapi.entity.Product;
 import com.rigapi.repository.ProductRepository;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,9 +14,11 @@ public class ProductService {
     this.productRepository = productRepository;
   }
 
-  public List<Product> getAllProducts() {
-    List<Product> products = new ArrayList<>();
-    productRepository.findAll().forEach(products::add);
-    return products;
+  public Optional<Product> getProductById(int productId) {
+    return productRepository.findById(productId);
+  }
+
+  public Optional<Product> createProduct(Product product) {
+    return Optional.of(productRepository.save(product)).orElseThrow(RuntimeException::new) ;
   }
 }
