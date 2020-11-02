@@ -1,5 +1,6 @@
 package com.rigapi.web.config;
 
+import java.util.Arrays;
 import java.util.Map;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -10,6 +11,7 @@ import org.springframework.util.MultiValueMap;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.ApiKey;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
@@ -34,7 +36,8 @@ public class SwaggerConfiguration {
         .forCodeGeneration(true)
         .genericModelSubstitutes(ResponseEntity.class)
         .directModelSubstitute(MultiValueMap.class, Map.class)
-        .apiInfo(buildApiInfo());
+        .apiInfo(buildApiInfo())
+        .securitySchemes(Arrays.asList(apiKey()));
   }
 
   private static ApiInfo buildApiInfo() {
@@ -45,6 +48,10 @@ public class SwaggerConfiguration {
         .description(apiProperties.getDescription())
         .version(apiProperties.getVersion())
         .build();
+  }
+
+  private static ApiKey apiKey() {
+    return new ApiKey("jwtToken", "Authorization", "header");
   }
 
   @ConfigurationProperties(prefix = "api.info")

@@ -1,24 +1,13 @@
 package com.rigapi.service;
 
 import com.rigapi.entity.Product;
-import com.rigapi.repository.ProductRepository;
 import java.util.Optional;
-import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-@Service
-public class ProductService {
+public interface ProductService {
 
-  private final ProductRepository productRepository;
+  Optional<Product> createProduct(Product p);
 
-  public ProductService(ProductRepository productRepository) {
-    this.productRepository = productRepository;
-  }
-
-  public Optional<Product> getProductById(int productId) {
-    return productRepository.findById(productId);
-  }
-
-  public Optional<Product> createProduct(Product product) {
-    return Optional.of(productRepository.save(product)).orElseThrow(RuntimeException::new) ;
-  }
+  Page<Product> getAllProducts(Pageable pageable);
 }

@@ -7,70 +7,446 @@
 	},
 	"item": [
 		{
-			"name": "getToken Copy",
-			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "username",
-							"value": "postman",
-							"type": "string"
+			"name": "products",
+			"item": [
+				{
+					"name": "create a new product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "997cc239-7e46-4ab4-a657-5cb820d4902e",
+									"type": "string"
+								}
+							]
 						},
-						{
-							"key": "password",
-							"value": "postman-password-secret",
-							"type": "string"
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"quantity\": 20,\n  \"name\": \"The Great Gatsby\",\n  \"author\": \"F. Scott Fitzgerald\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{rig-api}}/api/v1/products",
+							"host": [
+								"{{rig-api}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products"
+							]
 						}
-					]
+					},
+					"response": []
 				},
-				"method": "POST",
-				"header": [
-					{
-						"key": "",
-						"value": "",
-						"type": "text",
-						"disabled": true
-					}
-				],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "grant_type",
-							"value": "password",
-							"type": "text"
+				{
+					"name": "get product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "f855fc2f-aac9-44e9-aaf2-58d4adda2792",
+									"type": "string"
+								}
+							]
 						},
-						{
-							"key": "scope",
-							"value": "webclient",
-							"type": "text"
-						},
-						{
-							"key": "username",
-							"value": "demo-user",
-							"type": "text"
-						},
-						{
-							"key": "password",
-							"value": "user-password",
-							"type": "text"
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{rig-api}}/api/v1/products/1",
+							"host": [
+								"{{rig-api}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"1"
+							]
 						}
-					]
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{rig-api}}/api/oauth/token",
-					"host": [
-						"{{rig-api}}"
-					],
-					"path": [
-						"api",
-						"oauth",
-						"token"
-					]
+				{
+					"name": "delete a product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "f855fc2f-aac9-44e9-aaf2-58d4adda2792",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{rig-api}}/api/v1/products/1",
+							"host": [
+								"{{rig-api}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "f855fc2f-aac9-44e9-aaf2-58d4adda2792",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 2,\n    \"name\": \"Little Women\",\n    \"author\": \"Louisa May Alcott\",\n    \"quantity\": 42\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{rig-api}}/api/v1/products/2",
+							"host": [
+								"{{rig-api}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"2"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "customer",
+			"item": [
+				{
+					"name": "create a new customer",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "be30dffc-327a-44a4-9ab9-3d7bf7717cdf",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"Ben\",\n  \"lastName\": \"Taylor\",\n  \"address\": \"Upper Hill, San Francisco, Carlifornia, USA\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{rig-api}}/api/v1/customers",
+							"host": [
+								"{{rig-api}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get customer",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "997cc239-7e46-4ab4-a657-5cb820d4902e",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{rig-api}}/api/v1/customers/1",
+							"host": [
+								"{{rig-api}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"customers",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get customer orders",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "997cc239-7e46-4ab4-a657-5cb820d4902e",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{rig-api}}/api/v1/customers/1/orders",
+							"host": [
+								"{{rig-api}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"customers",
+								"1",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "6584a0b3-c69b-454b-90d4-3895d8aec99f",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "686fb23f-21c7-487f-9bfd-d7d39c4ed78a",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "token",
+			"item": [
+				{
+					"name": "Get Authorization Token",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "postman",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "postman-password-secret",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "webclient",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "demo-user",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "user-password",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{rig-api}}/api/oauth/token",
+							"host": [
+								"{{rig-api}}"
+							],
+							"path": [
+								"api",
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "orders",
+			"item": [
+				{
+					"name": "create a new customer order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "997cc239-7e46-4ab4-a657-5cb820d4902e",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"quantity\": 20,\n  \"name\": \"The Great Gatsby\",\n  \"author\": \"F. Scott Fitzgerald\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{rig-api}}/api/v1/orders",
+							"host": [
+								"{{rig-api}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
 		}
 	],
 	"protocolProfileBehavior": {}

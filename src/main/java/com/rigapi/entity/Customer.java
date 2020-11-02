@@ -1,6 +1,7 @@
 package com.rigapi.entity;
 
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,8 +25,20 @@ public class Customer {
   @Column(name = "last_name", nullable = false)
   private String lastName;
 
+  @Column(name = "address", nullable = false)
+  private String address;
+
   @OneToMany(mappedBy = "customer")
   private Set<Order> orders;
+
+  public Customer() {
+  }
+
+  public Customer(String firstName, String lastName, String address) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.address = address;
+  }
 
   public int getId() {
     return id;
@@ -57,5 +70,13 @@ public class Customer {
 
   public void setOrders(Set<Order> orders) {
     this.orders = orders;
+  }
+
+  public String getAddress() {
+    return address;
+  }
+
+  public void setAddress(String address) {
+    this.address = address;
   }
 }

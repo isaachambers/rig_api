@@ -25,8 +25,12 @@ public class Product {
   @Column(name = "quantity", nullable = false)
   private int quantity;
 
-  public Product(String name, int quantity) {
+  public Product() {
+  }
+
+  public Product(String name, String author, int quantity) {
     this.name = name;
+    this.author = author;
     this.quantity = quantity;
   }
 

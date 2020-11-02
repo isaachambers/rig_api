@@ -1,5 +1,6 @@
 package com.rigapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
 
 @Entity
 @Table(name = "order_detail")
@@ -20,15 +22,18 @@ public class OrderDetail {
   private int id;
 
   @Column(name = "quantity", nullable = false)
+  @Min(1)
   private int quantity;
 
   @OneToOne
   @MapsId
   @JoinColumn(name = "user_id")
+  @JsonIgnore
   private Product product;
 
   @OneToOne
   @JoinColumn(name = "order_id")
+  @JsonIgnore
   private Order order;
 
   public int getId() {
