@@ -5,11 +5,12 @@ import com.rigapi.entity.Order;
 import com.rigapi.service.CustomerService;
 import com.rigapi.service.OrderService;
 import com.rigapi.web.request.CreateCustomerRequest;
+import com.rigapi.web.response.CustomerOrdersResponse;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import io.swagger.annotations.Authorization;
 import javax.validation.Valid;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -28,7 +29,6 @@ public class CustomerController {
 
   private final CustomerService customerService;
   private final OrderService orderService;
-  private final Logger LOGGER = LoggerFactory.getLogger(CustomerController.class);
 
   public CustomerController(CustomerService customerService, OrderService orderService) {
     this.customerService = customerService;
@@ -38,28 +38,34 @@ public class CustomerController {
 
   @Transactional
   @PostMapping("")
-  @ApiOperation(value = "Create Customer", notes = "This method creates a new customer in the system", authorizations = {@Authorization(value = "jwtToken")})
-  public ResponseEntity<?> createCustomer(@Valid @RequestBody CreateCustomerRequest request) {
-    try {
-      Customer customer = customerService
-          .createCustomer(new Customer(request.getFirstName(), request.getLastName(), request.getAddress()));
-      return new ResponseEntity<>(customer, HttpStatus.OK);
-    } catch (Exception ex) {
-      LOGGER.error("error", ex);
-      return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+  @ApiOperation(
+      value = "Create Customer",
+      notes = "This method creates a new customer in the system",
+      authorizations = {@Authorization(value = "jwtToken")},
+      response = Customer.class)
+  @ApiResponses(value = {
+      @ApiResponse(code = 200, message = "Successfully created customer"),
+      @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+      @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+      @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+  })
+  public ResponseEntity<Customer> createCustomer(@Valid @RequestBody CreateCustomerRequest request) {
+    Customer customer = customerService.createCustomer(new Customer(request.getFirstName(), request.getLastName(), request.getAddress()));
+    return new ResponseEntity<>(customer, HttpStatus.OK);
   }
 
-  @Transactional
   @GetMapping("/{customerId}/orders")
-  @ApiOperation(value = "Retrieves list of customer orders", authorizations = {@Authorization(value = "jwtToken")})
-  public ResponseEntity<?> createCustomer(@PathVariable int customerId, Pageable pageable) {
-    try {
-      Page<Order> orders = customerService.getCustomerOrdersById(customerId, pageable);
-      return new ResponseEntity<>(orderService.getCustomerOrdersResponse(orders, pageable), HttpStatus.OK);
-    } catch (Exception ex) {
-      LOGGER.error("error", ex);
-      return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+  @ApiOperation(value = "Retrieves list of customer orders",
+      authorizations = {@Authorization(value = "jwtToken")},
+      response = CustomerOrdersResponse.class, responseContainer = "List")
+  @ApiResponses(value = {
+      @ApiResponse(code = 200, message = "Successfully retrieved customer orders"),
+      @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+      @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+      @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+  })
+  public Page<CustomerOrdersResponse> getCustomerOrders(@PathVariable int customerId, Pageable pageable) {
+    Page<Order> orders = customerService.getCustomerOrdersById(customerId, pageable);
+    return orderService.getCustomerOrdersResponse(orders, pageable);
   }
 }

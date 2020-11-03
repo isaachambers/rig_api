@@ -1,5 +1,6 @@
 package com.rigapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -29,6 +30,7 @@ public class Customer {
   private String address;
 
   @OneToMany(mappedBy = "customer")
+  @JsonIgnore
   private Set<Order> orders;
 
   public Customer() {

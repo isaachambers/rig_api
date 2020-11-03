@@ -1,4 +1,4 @@
-package com.rigapi.service;
+package com.rigapi.service.impl;
 
 import com.rigapi.domain.OrderStatus;
 import com.rigapi.entity.Customer;
@@ -6,11 +6,13 @@ import com.rigapi.entity.Order;
 import com.rigapi.entity.OrderDetail;
 import com.rigapi.entity.Product;
 import com.rigapi.exception.CustomerNotFoundException;
+import com.rigapi.exception.OrderNotFoundException;
 import com.rigapi.exception.OutOfStockException;
 import com.rigapi.exception.ProductNotFoundException;
 import com.rigapi.repository.CustomerRepository;
 import com.rigapi.repository.OrderRepository;
 import com.rigapi.repository.ProductRepository;
+import com.rigapi.service.OrderService;
 import com.rigapi.web.request.CreateOrderRequest;
 import com.rigapi.web.response.CustomerOrdersResponse;
 import com.rigapi.web.response.OrderDetailResponse;
@@ -46,11 +48,9 @@ public class OrderServiceImpl implements OrderService {
 
     order.setCustomer(customer);
     List<OrderDetail> orderDetails = request.getDetailsList().stream().map(detail -> {
-      //Check if product exists
       Product product = productRepository.findById(detail.getProductId()).orElseThrow(() -> new ProductNotFoundException("Product does not exist"));
-      // Check if quantity ordered for does not exceed quantity in store
       if (product.getQuantity() - detail.getQuantity() < 0) {
-        throw new OutOfStockException(String.format("Order cannot be fulfilled because only %s items are left in stock", product.getQuantity()));
+        throw new OutOfStockException(String.format("Order cannot be fulfilled because only %s items are left in stock for %s", product.getQuantity(), product.getName()));
       } else {
         int currentStock = product.getQuantity() - detail.getQuantity();
         product.setQuantity(currentStock);
@@ -71,12 +71,6 @@ public class OrderServiceImpl implements OrderService {
     return orderRepository.save(order);
   }
 
-  @Override
-  public synchronized void changeOrderStatus(OrderStatus orderStatus, Order order) {
-    order.setOrderStatus(orderStatus);
-    orderRepository.save(order);
-  }
-
   public Customer getCustomer(int customerId) {
     return customerRepository.findById(customerId).orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
   }
@@ -85,25 +79,53 @@ public class OrderServiceImpl implements OrderService {
   public Page<CustomerOrdersResponse> getCustomerOrdersResponse(Page<Order> orders, Pageable pageable) {
     List<CustomerOrdersResponse> responses = new ArrayList<>();
     orders.getContent().forEach(order -> {
-
-      CustomerOrdersResponse response = new CustomerOrdersResponse();
-      response.setCreationTime(order.getCreationTime());
-      response.setUpdatedTime(order.getUpdatedTime());
-      response.setOrderStatus(order.getOrderStatus());
-      response.setOrderId(order.getId());
-
-      List<OrderDetailResponse> orderDetailResponseList = new ArrayList<>();
-      order.getDetails().forEach(orderDetail -> {
-        OrderDetailResponse detail = new OrderDetailResponse();
-        detail.setProductId(orderDetail.getId());
-        detail.setProductName(orderDetail.getProduct().getName());
-        detail.setQuantityOrdered(orderDetail.getQuantity());
-        orderDetailResponseList.add(detail);
-      });
-
-      response.setDetails(orderDetailResponseList);
+      CustomerOrdersResponse response = getCustomerOrdersResponse(order);
       responses.add(response);
     });
     return new PageImpl<>(responses, pageable, orders.getTotalElements());
+  }
+
+  private CustomerOrdersResponse getCustomerOrdersResponse(Order order) {
+    CustomerOrdersResponse response = new CustomerOrdersResponse();
+    response.setCreationTime(order.getCreationTime());
+    response.setUpdatedTime(order.getUpdatedTime());
+    response.setOrderStatus(order.getOrderStatus());
+    response.setOrderId(order.getId());
+    List<OrderDetailResponse> orderDetailResponseList = getOrderDetailResponses(order);
+    response.setDetails(orderDetailResponseList);
+    return response;
+  }
+
+  private List<OrderDetailResponse> getOrderDetailResponses(Order order) {
+    List<OrderDetailResponse> orderDetailResponseList = new ArrayList<>();
+    order.getDetails().forEach(orderDetail -> {
+      OrderDetailResponse detail = new OrderDetailResponse();
+      detail.setProductId(orderDetail.getProduct().getId());
+      detail.setProductName(orderDetail.getProduct().getName());
+      detail.setQuantityOrdered(orderDetail.getQuantity());
+      orderDetailResponseList.add(detail);
+    });
+    return orderDetailResponseList;
+  }
+
+  @Override
+  public List<OrderDetailResponse> getOrderDetails(int orderId) {
+    Order order = getOrder(orderId);
+    return getOrderDetailResponses(order);
+  }
+
+  private Order getOrder(int orderId) {
+    return orderRepository.findById(orderId).orElseThrow(() -> new OrderNotFoundException("Order Does Not Exist"));
+  }
+
+  @Override
+  public CustomerOrdersResponse getOrderResponse(int orderId) {
+    Order order = getOrder(orderId);
+    return getCustomerOrdersResponse(order);
+  }
+
+  @Override
+  public Page<Order> getAllOrders(Pageable pageable) {
+    return orderRepository.findAllByOrderByCreationTimeDesc(pageable);
   }
 }

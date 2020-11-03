@@ -10,4 +10,6 @@ import org.springframework.stereotype.Repository;
 public interface OrderRepository extends PagingAndSortingRepository<Order, Integer> {
 
   Page<Order> findByCustomerId(int id, Pageable pageable);
+
+  Page<Order> findAllByOrderByCreationTimeDesc(Pageable pageable);
 }

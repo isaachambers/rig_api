@@ -17,7 +17,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "997cc239-7e46-4ab4-a657-5cb820d4902e",
+									"value": "c740d181-9b09-4e70-be9c-eb0736c664ac",
 									"type": "string"
 								}
 							]
@@ -53,126 +53,6 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "get product",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "f855fc2f-aac9-44e9-aaf2-58d4adda2792",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"url": {
-							"raw": "{{rig-api}}/api/v1/products/1",
-							"host": [
-								"{{rig-api}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"products",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "delete a product",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "f855fc2f-aac9-44e9-aaf2-58d4adda2792",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"url": {
-							"raw": "{{rig-api}}/api/v1/products/1",
-							"host": [
-								"{{rig-api}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"products",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update product",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "f855fc2f-aac9-44e9-aaf2-58d4adda2792",
-									"type": "string"
-								}
-							]
-						},
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"id\": 2,\n    \"name\": \"Little Women\",\n    \"author\": \"Louisa May Alcott\",\n    \"quantity\": 42\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{rig-api}}/api/v1/products/2",
-							"host": [
-								"{{rig-api}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"products",
-								"2"
-							]
-						}
-					},
-					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -188,7 +68,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "be30dffc-327a-44a4-9ab9-3d7bf7717cdf",
+									"value": "c740d181-9b09-4e70-be9c-eb0736c664ac",
 									"type": "string"
 								}
 							]
@@ -226,43 +106,6 @@
 					"response": []
 				},
 				{
-					"name": "get customer",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "997cc239-7e46-4ab4-a657-5cb820d4902e",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"url": {
-							"raw": "{{rig-api}}/api/v1/customers/1",
-							"host": [
-								"{{rig-api}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"customers",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "get customer orders",
 					"request": {
 						"auth": {
@@ -270,7 +113,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "997cc239-7e46-4ab4-a657-5cb820d4902e",
+									"value": "6053b802-bd76-4b56-aaf0-b17af5a807ef",
 									"type": "string"
 								}
 							]
@@ -285,7 +128,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{rig-api}}/api/v1/customers/1/orders",
+							"raw": "{{rig-api}}/api/v1/customers/2/orders",
 							"host": [
 								"{{rig-api}}"
 							],
@@ -293,7 +136,7 @@
 								"api",
 								"v1",
 								"customers",
-								"1",
+								"2",
 								"orders"
 							]
 						}
@@ -408,7 +251,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "997cc239-7e46-4ab4-a657-5cb820d4902e",
+									"value": "c740d181-9b09-4e70-be9c-eb0736c664ac",
 									"type": "string"
 								}
 							]
@@ -424,7 +267,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"quantity\": 20,\n  \"name\": \"The Great Gatsby\",\n  \"author\": \"F. Scott Fitzgerald\"\n}",
+							"raw": "{\n  \"customerId\": 3,\n  \"detailsList\": [\n    {\n      \"productId\": 1,\n      \"quantity\": 4    \n    },\n    {\n      \"productId\": 2,\n      \"quantity\": 6    \n    }\n    \n  ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"

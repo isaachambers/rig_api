@@ -1,8 +1,8 @@
-package com.rigapi.service;
+package com.rigapi.service.impl;
 
 import com.rigapi.entity.Product;
 import com.rigapi.repository.ProductRepository;
-import java.util.Optional;
+import com.rigapi.service.ProductService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -19,9 +19,8 @@ public class ProductServiceImpl implements ProductService {
   }
 
   @Override
-  public Optional<Product> createProduct(Product p) {
-    Product product = productRepository.save(p);
-    return Optional.of(product);
+  public Product createProduct(Product p) {
+    return productRepository.save(p);
   }
 
   @Override

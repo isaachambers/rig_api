@@ -5,14 +5,12 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 
 import com.rigapi.exception.CustomerNotFoundException;
+import com.rigapi.exception.OrderNotFoundException;
 import com.rigapi.exception.OutOfStockException;
 import com.rigapi.exception.ProductNotFoundException;
 import com.rigapi.web.response.ErrorResponse;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -75,17 +73,17 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     return getErrorResponseResponseEntity(ex, status, ex.getMessage());
   }
 
+  @ExceptionHandler
+  public ResponseEntity<ErrorResponse> handle(OrderNotFoundException ex) {
+    var status = NOT_FOUND;
+    return getErrorResponseResponseEntity(ex, status, ex.getMessage());
+  }
+
   private ResponseEntity<ErrorResponse> getErrorResponseResponseEntity(Exception ex, HttpStatus status, String message) {
     var error = new ErrorResponse();
     error.setStatus(status.getReasonPhrase());
     error.setMessage(message);
     LOG.info("Response: {} Uuid: {}.", error.getStatus(), error.getUuid(), ex);
     return new ResponseEntity<>(error, status);
-  }
-
-  private static <T, U> List<T> mapAll(List<U> list, Function<U, T> mapper) {
-    return list.stream()
-        .map(mapper)
-        .collect(Collectors.toUnmodifiableList());
   }
 }
