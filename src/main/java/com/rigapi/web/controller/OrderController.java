@@ -41,4 +41,16 @@ public class OrderController {
       return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
+
+//  @GetMapping("")
+//  @ApiOperation(value = "Get all current orders by specific filters", authorizations = {@Authorization(value = "jwtToken")})
+//  public ResponseEntity<?> getAll(Pageable pageable) {
+//    try {
+//      Page<Order> orders = orderService.getOrders(pageable);
+//      return new ResponseEntity<>(orderService.getCustomerOrdersResponse(orders, pageable), HttpStatus.OK);
+//    } catch (Exception ex) {
+//      LOGGER.error("error", ex);
+//      return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+//    }
+//  }
 }

@@ -1,7 +1,7 @@
 package com.rigapi.web.controller;
 
 import com.rigapi.entity.Product;
-import com.rigapi.service.ProductServiceImpl;
+import com.rigapi.service.ProductService;
 import com.rigapi.web.request.CreateOrUpdateProductRequest;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
@@ -24,18 +24,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/v1/products")
 public class ProductController {
 
-  private final ProductServiceImpl productServiceImpl;
+  private final ProductService productService;
   private final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
 
-  public ProductController(ProductServiceImpl productServiceImpl) {
-    this.productServiceImpl = productServiceImpl;
+  public ProductController(ProductService productService) {
+    this.productService = productService;
   }
+
 
   @GetMapping("")
   @ApiOperation(value = "Get all current products", notes = "List of all products in inventory", authorizations = {@Authorization(value = "jwtToken")})
   public ResponseEntity<?> getAll(Pageable pageable) {
     try {
-      Page<Product> products = productServiceImpl.getAllProducts(pageable);
+      Page<Product> products = productService.getAllProducts(pageable);
       return new ResponseEntity<>(products, HttpStatus.OK);
     } catch (Exception ex) {
       LOGGER.error("error", ex);
@@ -48,7 +49,7 @@ public class ProductController {
   @ApiOperation(value = "Create Product", notes = "This method creates a new product in store", authorizations = {@Authorization(value = "jwtToken")})
   public ResponseEntity<?> createProduct(@Valid @RequestBody CreateOrUpdateProductRequest request) {
     try {
-      Optional<Product> product = productServiceImpl.createProduct(new Product(request.getName(), request.getAuthor(), request.getQuantity()));
+      Optional<Product> product = productService.createProduct(new Product(request.getName(), request.getAuthor(), request.getQuantity()));
       return new ResponseEntity<>(product, HttpStatus.OK);
     } catch (Exception ex) {
       LOGGER.error("error", ex);

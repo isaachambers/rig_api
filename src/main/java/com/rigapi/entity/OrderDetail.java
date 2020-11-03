@@ -7,7 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
@@ -26,8 +25,7 @@ public class OrderDetail {
   private int quantity;
 
   @OneToOne
-  @MapsId
-  @JoinColumn(name = "user_id")
+  @JoinColumn(name = "product_id")
   @JsonIgnore
   private Product product;
 

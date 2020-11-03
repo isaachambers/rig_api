@@ -3,7 +3,7 @@ package com.rigapi.web.response;
 public class OrderDetailResponse {
   private int productId;
   private String productName;
-  private int quantity;
+  private int quantityOrdered;
 
   public int getProductId() {
     return productId;
@@ -21,11 +21,11 @@ public class OrderDetailResponse {
     this.productName = productName;
   }
 
-  public int getQuantity() {
-    return quantity;
+  public int getQuantityOrdered() {
+    return quantityOrdered;
   }
 
-  public void setQuantity(int quantity) {
-    this.quantity = quantity;
+  public void setQuantityOrdered(int quantityOrdered) {
+    this.quantityOrdered = quantityOrdered;
   }
 }
