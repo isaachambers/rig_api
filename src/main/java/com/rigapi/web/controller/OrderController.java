@@ -33,13 +33,8 @@ public class OrderController {
   @ApiOperation(value = "Create new customer order", notes = "This method creates a new customer order in the system",
       authorizations = {@Authorization(value = "jwtToken")})
   public ResponseEntity<?> createCustomerOrder(@Valid @RequestBody CreateOrderRequest request) {
-    try {
-      Order order = orderService.createOrder(request);
-      return new ResponseEntity<>(order, HttpStatus.OK);
-    } catch (Exception ex) {
-      LOGGER.error("error", ex);
-      return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+    Order order = orderService.createOrder(request);
+    return new ResponseEntity<>(order, HttpStatus.OK);
   }
 
 //  @GetMapping("")
