@@ -1,7 +1,9 @@
 package com.rigapi.entity;
 
+import com.rigapi.entity.listener.ProductEntityListener;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -9,7 +11,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "product")
-public class Product {
+@EntityListeners(ProductEntityListener.class)
+public class Product extends BaseAuditEntity<String> {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,20 +37,28 @@ public class Product {
     this.quantity = quantity;
   }
 
-  public int getId() {
-    return id;
-  }
-
   public void setId(int id) {
     this.id = id;
   }
 
-  public String getName() {
-    return name;
-  }
-
   public void setName(String name) {
     this.name = name;
+  }
+
+  public String getAuthor() {
+    return author;
+  }
+
+  public void setAuthor(String author) {
+    this.author = author;
+  }
+
+  public int getId() {
+    return id;
+  }
+
+  public String getName() {
+    return name;
   }
 
   public int getQuantity() {
@@ -58,11 +69,13 @@ public class Product {
     this.quantity = quantity;
   }
 
-  public String getAuthor() {
-    return author;
-  }
-
-  public void setAuthor(String author) {
-    this.author = author;
+  @Override
+  public String toString() {
+    return "Product{" +
+        "id=" + id +
+        ", name='" + name + '\'' +
+        ", author='" + author + '\'' +
+        ", quantity=" + quantity +
+        '}';
   }
 }

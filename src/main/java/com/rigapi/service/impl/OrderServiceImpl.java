@@ -17,7 +17,6 @@ import com.rigapi.web.request.CreateOrderRequest;
 import com.rigapi.web.response.CustomerOrdersResponse;
 import com.rigapi.web.response.OrderDetailResponse;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -62,12 +61,9 @@ public class OrderServiceImpl implements OrderService {
       orderDetail.setOrder(order);
       return orderDetail;
     }).collect(Collectors.toList());
-    order.setCreationTime(new Date());
-    order.setUpdatedTime(new Date());
     order.setOrderStatus(OrderStatus.CREATED);
     order.setDetails(new HashSet<>(orderDetails));
     customer.getOrders().add(order);
-    customerRepository.save(customer);
     return orderRepository.save(order);
   }
 
@@ -87,8 +83,6 @@ public class OrderServiceImpl implements OrderService {
 
   private CustomerOrdersResponse getCustomerOrdersResponse(Order order) {
     CustomerOrdersResponse response = new CustomerOrdersResponse();
-    response.setCreationTime(order.getCreationTime());
-    response.setUpdatedTime(order.getUpdatedTime());
     response.setOrderStatus(order.getOrderStatus());
     response.setOrderId(order.getId());
     List<OrderDetailResponse> orderDetailResponseList = getOrderDetailResponses(order);
@@ -126,6 +120,6 @@ public class OrderServiceImpl implements OrderService {
 
   @Override
   public Page<Order> getAllOrders(Pageable pageable) {
-    return orderRepository.findAllByOrderByCreationTimeDesc(pageable);
+    return orderRepository.findAllByOrderByCreatedDateDesc(pageable);
   }
 }

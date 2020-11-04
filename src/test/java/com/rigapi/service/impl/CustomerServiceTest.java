@@ -2,7 +2,6 @@ package com.rigapi.service.impl;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
 import com.rigapi.IntegrationTest;
 import com.rigapi.entity.Customer;
 import com.rigapi.entity.Order;

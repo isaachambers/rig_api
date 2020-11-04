@@ -33,10 +33,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   }
 
   @Override
-  public void configure(WebSecurity web) throws Exception {
+  public void configure(WebSecurity web) {
     web.ignoring().antMatchers("/swagger-ui.html")
         .antMatchers("/docs")
         .antMatchers("/docs/json")
+        .antMatchers("/h2-console/**")
         .antMatchers("/actuator/**")
         .antMatchers("/webjars/springfox-swagger-ui/**")
         .antMatchers("/swagger-resources/**")

@@ -4,7 +4,6 @@ import static com.rigapi.testmixin.DatabaseCleaningTestMixin.Private.orderReposi
 import static com.rigapi.testmixin.DatabaseCleaningTestMixin.Private.productRepository;
 import static com.rigapi.testmixin.DatabaseCleaningTestMixin.Private.customerRepository;
 
-
 import com.rigapi.repository.CustomerRepository;
 import com.rigapi.repository.OrderRepository;
 import com.rigapi.repository.ProductRepository;

@@ -11,5 +11,5 @@ public interface OrderRepository extends PagingAndSortingRepository<Order, Integ
 
   Page<Order> findByCustomerId(int id, Pageable pageable);
 
-  Page<Order> findAllByOrderByCreationTimeDesc(Pageable pageable);
+  Page<Order> findAllByOrderByCreatedDateDesc(Pageable pageable);
 }

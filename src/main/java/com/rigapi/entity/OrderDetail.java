@@ -1,8 +1,10 @@
 package com.rigapi.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.rigapi.entity.listener.OrderDetailEntityListener;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,7 +15,8 @@ import javax.validation.constraints.Min;
 
 @Entity
 @Table(name = "order_detail")
-public class OrderDetail {
+@EntityListeners(OrderDetailEntityListener.class)
+public class OrderDetail extends BaseAuditEntity<String> {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -64,5 +67,14 @@ public class OrderDetail {
 
   public void setOrder(Order order) {
     this.order = order;
+  }
+
+  @Override
+  public String toString() {
+    return "OrderDetail{" +
+        "id=" + id +
+        ", quantity=" + quantity +
+        ", product=" + product +
+        '}';
   }
 }

@@ -1,19 +1,20 @@
 package com.rigapi.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.rigapi.entity.listener.CustomerEntityListener;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "customer")
-public class Customer {
+@EntityListeners(CustomerEntityListener.class)
+public class Customer extends BaseAuditEntity<String> {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,7 +30,7 @@ public class Customer {
   @Column(name = "address", nullable = false)
   private String address;
 
-  @OneToMany(mappedBy = "customer")
+  @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
   @JsonIgnore
   private Set<Order> orders;
 
@@ -80,5 +81,16 @@ public class Customer {
 
   public void setAddress(String address) {
     this.address = address;
+  }
+
+  @Override
+  public String toString() {
+    return "Customer{" +
+        "id=" + id +
+        ", firstName='" + firstName + '\'' +
+        ", lastName='" + lastName + '\'' +
+        ", address='" + address + '\'' +
+        ", orders=" + orders +
+        '}';
   }
 }

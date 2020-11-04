@@ -2,11 +2,12 @@ package com.rigapi.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rigapi.domain.OrderStatus;
-import java.util.Date;
+import com.rigapi.entity.listener.OrderEntityListener;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,12 +15,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "order_tbl")
-public class Order {
+@EntityListeners(OrderEntityListener.class)
+public class Order extends BaseAuditEntity<String> {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -31,16 +31,8 @@ public class Order {
   @JsonIgnore
   private Customer customer;
 
-  @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
   private Set<OrderDetail> details;
-
-  @Temporal(value = TemporalType.TIMESTAMP)
-  @Column(name = "CREATED_TIME")
-  private Date creationTime;
-
-  @Temporal(value = TemporalType.TIMESTAMP)
-  @Column(name = "UPDATED_TIME")
-  private Date updatedTime;
 
   private OrderStatus orderStatus;
 
@@ -76,19 +68,12 @@ public class Order {
     this.orderStatus = orderStatus;
   }
 
-  public Date getCreationTime() {
-    return creationTime;
-  }
-
-  public void setCreationTime(Date creationTime) {
-    this.creationTime = creationTime;
-  }
-
-  public Date getUpdatedTime() {
-    return updatedTime;
-  }
-
-  public void setUpdatedTime(Date updatedTime) {
-    this.updatedTime = updatedTime;
+  @Override
+  public String toString() {
+    return "Order{" +
+        "id=" + id +
+        ", details=" + details +
+        ", orderStatus=" + orderStatus +
+        '}';
   }
 }

@@ -9,15 +9,14 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 
 @Configuration
-
-public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
+public class AuthenticationConfig extends AuthorizationServerConfigurerAdapter {
 
   private final AuthenticationManager authenticationManager;
 
   private final UserDetailsService userDetailsService;
 
-  public OAuth2Config(AuthenticationManager authenticationManager,
-                      @Qualifier("userDetailsServiceBean") UserDetailsService userDetailsService) {
+  public AuthenticationConfig(AuthenticationManager authenticationManager,
+                              @Qualifier("userDetailsServiceBean") UserDetailsService userDetailsService) {
     this.authenticationManager = authenticationManager;
     this.userDetailsService = userDetailsService;
   }
