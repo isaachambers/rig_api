@@ -1,9 +1,15 @@
 package com.rigapi.web.request;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import java.util.List;
 
+@ApiModel
 public class CreateOrderRequest {
+
+  @ApiModelProperty(required = true)
   private int customerId;
+  @ApiModelProperty(required = true)
   private List<OrderDetailsRequest> detailsList;
 
   public int getCustomerId() {

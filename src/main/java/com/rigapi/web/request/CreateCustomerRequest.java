@@ -8,18 +8,18 @@ import javax.validation.constraints.Size;
 @ApiModel
 public class CreateCustomerRequest {
 
-  @NotNull
+  @NotNull(message = "firstName must not be null")
   @Size(max = 255)
   @ApiModelProperty(required = true)
   private String firstName;
 
-  @NotNull
+  @NotNull(message = "lastName must not be null")
   @Size(max = 255)
   @ApiModelProperty(required = true)
   private String lastName;
 
-  @NotNull
   @Size(max = 255)
+  @NotNull(message = "address must not be null")
   @ApiModelProperty(required = true)
   private String address;
 

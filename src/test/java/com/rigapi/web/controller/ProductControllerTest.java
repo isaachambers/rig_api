@@ -1,26 +1,55 @@
 package com.rigapi.web.controller;
 
-import static org.junit.jupiter.api.Assertions.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.rigapi.IntegrationTest;
+import org.assertj.core.groups.Tuple;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpHeaders;
 
+class ProductControllerTest extends IntegrationTest {
 
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
+  @DisplayName("Should create new product")
+  @Test
+  void shouldCreateNewProduct() throws JsonProcessingException {
+    HttpHeaders headers = getHttpHeaders();
 
-class ProductControllerTest {
+    var response = postExpectingCreated("/v1/products", headers,
+        e("quantity", 10),
+        e("name", "The Great Gatsby"),
+        e("author", "F. Scott Fitzgerald"));
 
-//
-//  String firstName = "fName";
-//  String lastName = "lastName";
-//  String email = "email@mail.com";
-//  String userPassword = "pass";
-//  String client = "defaultClient";
-//  String clientPassword = "secret";
-//  String scope = "webclient";
-//  MultiValueMap<String, String> request = new LinkedMultiValueMap<>();
-//    request.set("scope", scope);
-//    request.set("username", email);
-//    request.set("password", userPassword);
-//    request.set("grant_type", "password");
-//  var tokenResponse = post("/oauth/token", client, clientPassword, request);
-//  String accessToken = toMap(tokenResponse).get("access_token");
+    assertJsonMap(response).extracting("id").isNotNull();
+  }
+
+  @DisplayName("Should fail with invalid request")
+  @Test
+  void shouldFailProductCreationWithInvalidRequest() throws JsonProcessingException {
+    HttpHeaders headers = getHttpHeaders();
+
+    var response = postExpectingBadRequest("/v1/products", headers,
+        e("", ""));
+
+    assertJsonMap(response).extracting("errors")
+        .asList().extracting("message")
+        .containsExactlyInAnyOrder("name must not be null", "author must not be null");
+  }
+
+  @DisplayName("Should list all products")
+  @Test
+  void shouldListAllProducts() throws JsonProcessingException {
+    HttpHeaders headers = getHttpHeaders();
+    postExpectingCreated("/v1/products", headers,
+        e("quantity", 10),
+        e("name", "The Great Gatsby"),
+        e("author", "F. Scott Fitzgerald"));
+
+    var response = get("/v1/products", headers);
+
+    assertJsonMap(response)
+        .extracting("content")
+        .asList()
+        .extracting("author", "name", "quantity").
+        containsExactly(Tuple.tuple("F. Scott Fitzgerald", "The Great Gatsby", 10));
+  }
 }

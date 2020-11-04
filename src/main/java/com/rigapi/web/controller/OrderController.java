@@ -14,12 +14,14 @@ import java.util.List;
 import javax.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -39,11 +41,12 @@ public class OrderController {
       notes = "This method creates a new customer order in the system",
       authorizations = {@Authorization(value = "jwtToken")})
   @ApiResponses(value = {
-      @ApiResponse(code = 200, message = "Successfully created customer order"),
+      @ApiResponse(code = 201, message = "Successfully created customer order"),
       @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
       @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
       @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
   })
+  @ResponseStatus(HttpStatus.CREATED)
   public Order createCustomerOrder(@Valid @RequestBody CreateOrderRequest request) {
     return orderService.createOrder(request);
   }
@@ -58,6 +61,7 @@ public class OrderController {
       @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
       @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
   })
+  @ResponseStatus(HttpStatus.OK)
   public List<OrderDetailResponse> getOrderDetails(@PathVariable int orderId) {
     return orderService.getOrderDetails(orderId);
   }
@@ -72,6 +76,7 @@ public class OrderController {
       @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
       @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
   })
+  @ResponseStatus(HttpStatus.OK)
   public CustomerOrdersResponse getOrder(@PathVariable int orderId) {
     return orderService.getOrderResponse(orderId);
   }
@@ -86,6 +91,7 @@ public class OrderController {
       @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
       @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
   })
+  @ResponseStatus(HttpStatus.OK)
   public Page<CustomerOrdersResponse> getAllOrders(Pageable pageable) {
     Page<Order> orders = orderService.getAllOrders(pageable);
     return orderService.getCustomerOrdersResponse(orders, pageable);

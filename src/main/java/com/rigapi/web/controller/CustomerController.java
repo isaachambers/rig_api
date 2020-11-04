@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -44,14 +45,15 @@ public class CustomerController {
       authorizations = {@Authorization(value = "jwtToken")},
       response = Customer.class)
   @ApiResponses(value = {
-      @ApiResponse(code = 200, message = "Successfully created customer"),
+      @ApiResponse(code = 201, message = "Successfully created customer"),
       @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
       @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
       @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
   })
-  public ResponseEntity<Customer> createCustomer(@Valid @RequestBody CreateCustomerRequest request) {
-    Customer customer = customerService.createCustomer(new Customer(request.getFirstName(), request.getLastName(), request.getAddress()));
-    return new ResponseEntity<>(customer, HttpStatus.OK);
+  @ResponseStatus(HttpStatus.CREATED)
+  public Customer createCustomer(@Valid @RequestBody CreateCustomerRequest request) {
+    return customerService.createCustomer(new Customer(request.getFirstName(), request.getLastName(), request.getAddress()));
+
   }
 
   @GetMapping("/{customerId}/orders")
@@ -64,6 +66,7 @@ public class CustomerController {
       @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
       @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
   })
+  @ResponseStatus(HttpStatus.OK)
   public Page<CustomerOrdersResponse> getCustomerOrders(@PathVariable int customerId, Pageable pageable) {
     Page<Order> orders = customerService.getCustomerOrdersById(customerId, pageable);
     return orderService.getCustomerOrdersResponse(orders, pageable);
